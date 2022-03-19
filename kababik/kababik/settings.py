@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'ksp',
     'rest_framework.authtoken',
     'djoser',
+    'drf_yasg'#документирование кода
 ]
 
 MIDDLEWARE = [

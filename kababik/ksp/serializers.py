@@ -15,6 +15,8 @@ class UserCustomSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())#запрещает брать другово юзера
     comment = serializers.StringRelatedField(many=True)
+    likes = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Post
         fields = "__all__"# если хотим все поля
@@ -23,26 +25,26 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    #owner = serializers.HiddenField(default=serializers.CurrentUserDefault)#запрещает брать другово юзера
+    own = serializers.HiddenField(default=serializers.CurrentUserDefault())#запрещает брать другово юзера
     class Meta:
         model = Image
         fields = "__all__"
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    #owner = serializers.HiddenField(default=serializers.CurrentUserDefault)#запрещает брать другово юзера
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())#запрещает брать другово юзера
     class Meta:
         model = Reviews
         fields = "__all__"
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    sender = serializers.SlugRelatedField(many=False, slug_field='username', queryset=CustomUser.objects.all())
+    sender = serializers.SlugRelatedField(many=False, slug_field='username',read_only='True')
     receiver = serializers.SlugRelatedField(many=False, slug_field='username', queryset=CustomUser.objects.all())
-
+    is_read = serializers.HiddenField(default=False)
     class Meta:
         model = Message
-        fields = ['sender', 'receiver', 'message', 'timestamp']
+        fields = "__all__"
 
 
 class FolowerSerializer(serializers.ModelSerializer):

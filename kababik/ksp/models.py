@@ -38,7 +38,7 @@ class Reviews(models.Model):
         'self', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True
     )
     post = models.ForeignKey(Post,related_name="comment", verbose_name="Пост", on_delete=models.CASCADE)
-
+    user = models.ForeignKey(CustomUser,related_name="commentparent", on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.name} - {self.post}"
 
