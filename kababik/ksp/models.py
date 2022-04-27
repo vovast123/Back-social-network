@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
 
 
 class Post(models.Model):
-    image = models.ManyToManyField('Image',verbose_name="Фотки",related_name='image_to_post')
+    image = models.ManyToManyField('Image',related_name='image_to_post')
     likes = models.ManyToManyField(CustomUser, blank=True, related_name='likes')
     text = models.CharField('Описание',max_length=255)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='own_post')
